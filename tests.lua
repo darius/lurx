@@ -1,3 +1,14 @@
+local lurx = require 'lurx'
+
+local literal = lurx.literal
+local either  = lurx.either
+local chain   = lurx.chain
+local star    = lurx.star
+
+function rx_test(input, remainder, pattern)
+   
+end
+
 rx_test('', nil, literal('X'))
 rx_test('wheee', nil, literal('X'))
 rx_test('X', '', literal('X'))
