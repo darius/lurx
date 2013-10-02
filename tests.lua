@@ -5,8 +5,13 @@ local either  = lurx.either
 local chain   = lurx.chain
 local star    = lurx.star
 
-function rx_test(input, remainder, pattern)
-   
+local function rx_test(input, expected_remainder, pattern)
+   local result, match_length = lurx.match(pattern, input)
+   if result ~= (expected_remainder ~= nil) then
+      print('Wrong result for', input, expected_remainder, pattern)
+   elseif match_length + #expected_remainder ~= #input then
+      print('Wrong remainder for', input, expected_remainder, pattern)
+   end
 end
 
 rx_test('', nil, literal('X'))
@@ -46,3 +51,5 @@ rx_test('abd', nil, chain(literal('a'), chain(star(literal('b')), literal('c')))
 rx_test('yoaabcaccaabbaba', 'ba', chain(literal('y'), chain(literal('o'), chain(star(either(chain(literal('a'), literal('b')), chain(star(literal('c')), literal('a')))), chain(literal('b'), literal('a'))))))
 rx_test('ad attacks', ' attacks', chain(literal('a'), chain(star(star(literal('b'))), literal('d'))))
 rx_test('abdomen', 'omen', chain(literal('a'), chain(star(star(literal('b'))), literal('d'))))
+
+return rx_test
