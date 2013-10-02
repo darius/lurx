@@ -9,7 +9,7 @@ local function rx_test(input, expected_remainder, pattern)
    local result, match_length = lurx.match(pattern, input)
    if result ~= (expected_remainder ~= nil) then
       print('Wrong result for', input, expected_remainder, pattern)
-   elseif match_length + #expected_remainder ~= #input then
+   elseif result and match_length + #expected_remainder ~= #input then
       print('Wrong remainder for', input, expected_remainder, pattern)
    end
 end
